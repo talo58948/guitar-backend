@@ -217,7 +217,7 @@ namespace guitar_backend.Db
                     .UsingEntity<Dictionary<string, object>>(
                         "Productsorder",
                         l => l.HasOne<Order>().WithMany().HasForeignKey("Order").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("order_productsorders_fk"),
-                        r => r.HasOne<Product>().WithMany().HasForeignKey("Product").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("products_fk"),
+                        r => r.HasOne<Product>().WithMany().HasForeignKey("Product").HasConstraintName("products_fk"),
                         j =>
                         {
                             j.HasKey("Product", "Order").HasName("PRIMARY").HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });

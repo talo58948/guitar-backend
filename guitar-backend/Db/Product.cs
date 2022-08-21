@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace guitar_backend.Db
 {
@@ -24,8 +25,11 @@ namespace guitar_backend.Db
         public string? Color { get; set; }
         public decimal? Price { get; set; }
 
+        [JsonIgnore]
         public virtual Category? CategoryNavigation { get; set; }
+        [JsonIgnore]
         public virtual Color? ColorNavigation { get; set; }
+        [JsonIgnore]
         public virtual Company? CompanyNavigation { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }

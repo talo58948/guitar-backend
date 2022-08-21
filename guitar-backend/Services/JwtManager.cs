@@ -47,9 +47,10 @@ namespace guitar_backend.Services
 		}
 		public int GetUserIdFromToken(string token)
 		{
+			token = token.Replace("Bearer ", string.Empty);
 			var handler = new JwtSecurityTokenHandler();
 			var jwt = handler.ReadJwtToken(token);
-			var userId = int.Parse(jwt.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
+			var userId = int.Parse(jwt.Claims.First(claim => claim.Type == "nameid").Value);
 			return userId;
 		} 
     }

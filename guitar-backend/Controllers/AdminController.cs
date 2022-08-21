@@ -136,7 +136,7 @@ namespace guitar_backend.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAllOrders()
         {
-            return Ok(await _db.Orders.ToListAsync());
+            return Ok(await _db.Orders.Include(o => o.User).Include(o => o.Products).ToListAsync());
         }
     }
 }

@@ -6,6 +6,6 @@ namespace guitar_backend.Models
     {
         [Required]
         public string Nonce { get; set; } = null!;
-        public IEnumerable<int> productIds { get; set; } = new int[] { };
+        public IEnumerable<int> ProductIds { get; set; } = new int[] { };
     }
 }

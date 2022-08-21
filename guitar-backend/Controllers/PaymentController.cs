@@ -34,9 +34,9 @@ namespace guitar_backend.Controllers
         /// </summary>
         /// <returns><c>Ok</c> with the created token.</returns>
         [HttpGet("[action]")]
-        public IActionResult GetToken()
+        public async Task<IActionResult> GetToken()
         {
-            return Ok(_braintreeService.GetToken());
+            return Ok(await _braintreeService.GetToken());
         }
         /// <summary>
         /// Makes the purchase.
@@ -49,14 +49,14 @@ namespace guitar_backend.Controllers
             ICollection<Product> products;
             try
             {
-                products = await _db.Products.Where(p => model.productIds.Contains(p.Id) && p.Price != null).ToListAsync();
+                products = await _db.Products.Where(p => model.ProductIds.Contains(p.Id) && p.Price != null).ToListAsync();
             }
             catch
             {
                 return BadRequest("No such product/s");
             }
             var totalPrice = products.Sum(p => p.Price ?? 0);
-
+            
             User? user = await _userManager.GetUserFromToken(Request.Headers["Authorization"]);
             if (user == null)
                 return BadRequest("User doesn't exist");
@@ -86,8 +86,12 @@ namespace guitar_backend.Controllers
 
                 return Ok($"Payment completed; {totalPrice} was deducted from your balance.");
             }
-            else 
+            else
+            {
+                _db.Orders.Remove(order);
+                await _db.SaveChangesAsync();
                 return BadRequest($"an error has occured");
+            }
         }
     }
 }
