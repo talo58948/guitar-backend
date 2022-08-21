@@ -6,7 +6,7 @@ using System.Text;
 namespace guitar_backend.Services
 {
 	/// <summary>
-	/// A service that manages the generation of Jwt tokens.
+	/// A service that manages the intercation with Jwt tokens.
 	/// </summary>
     public class JwtManager : IJwtManager
     {

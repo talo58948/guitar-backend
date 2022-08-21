@@ -13,7 +13,7 @@ namespace guitar_backend.Services
         /// </summary>
         private readonly guitardbContext _db;
         /// <summary>
-        /// A service that manages the generation of JWT tokens.
+        /// A service that manages the intercation with JWT tokens.
         /// </summary>
         private readonly IJwtManager _jwt;
         /// <summary>

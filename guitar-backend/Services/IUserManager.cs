@@ -23,7 +23,7 @@ namespace guitar_backend.Services
         /// Gets <c>User</c> infromation from jwt token passed to it.
         /// </summary>
         /// <param name="token">jwt token with <c>User</c> information encoded.</param>
-        /// <returns></returns>
+        /// <returns><c>User</c> object, representing a <c>User</c>.</returns>
         Task<User?> GetUserFromToken(string token);
     }
 }

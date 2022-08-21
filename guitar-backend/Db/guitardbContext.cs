@@ -7,13 +7,16 @@ namespace guitar_backend.Db
 {
     public partial class guitardbContext : DbContext
     {
-        public guitardbContext()
+        private readonly IConfiguration _config;
+        public guitardbContext(IConfiguration config)
         {
+            _config = config;
         }
 
-        public guitardbContext(DbContextOptions<guitardbContext> options)
+        public guitardbContext(DbContextOptions<guitardbContext> options, IConfiguration config)
             : base(options)
         {
+            this._config = config;
         }
 
         public virtual DbSet<Category> Categories { get; set; } = null!;
@@ -28,8 +31,7 @@ namespace guitar_backend.Db
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;database=guitar-db;uid=root;pwd=Anihomoatahomo1234!@F", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.30-mysql"));
+                optionsBuilder.UseMySql(_config["MySql:connectionString"], ServerVersion.Parse(_config["MySql:version"]));
             }
         }
 
