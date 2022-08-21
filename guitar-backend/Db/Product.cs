@@ -32,6 +32,7 @@ namespace guitar_backend.Db
         [JsonIgnore]
         public virtual Company? CompanyNavigation { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

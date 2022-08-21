@@ -216,15 +216,15 @@ namespace guitar_backend.Db
                     .WithMany(p => p.Products)
                     .UsingEntity<Dictionary<string, object>>(
                         "Productsorder",
-                        l => l.HasOne<Order>().WithMany().HasForeignKey("Order").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("order_productsorders_fk"),
-                        r => r.HasOne<Product>().WithMany().HasForeignKey("Product").HasConstraintName("products_fk"),
+                        l => l.HasOne<Order>().WithMany().HasForeignKey("Order").HasConstraintName("order-fk"),
+                        r => r.HasOne<Product>().WithMany().HasForeignKey("Product").HasConstraintName("product-fk"),
                         j =>
                         {
                             j.HasKey("Product", "Order").HasName("PRIMARY").HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                             j.ToTable("productsorders");
 
-                            j.HasIndex(new[] { "Order" }, "order_fk_idx");
+                            j.HasIndex(new[] { "Order" }, "order-fk_idx");
 
                             j.IndexerProperty<int>("Product").HasColumnName("product");
 

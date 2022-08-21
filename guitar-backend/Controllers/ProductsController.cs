@@ -38,18 +38,17 @@ namespace guitar_backend.Controllers
         /// </summary>
         /// <param name="category">The <c>Category</c> to filter by.</param>
         /// <returns><c>Ok</c> with the <c>Product</c>s of a given <c>Category</c>.</returns>
-        [HttpGet("[action]{category=string}")]
+        [HttpGet("[action]")]
         public async Task<IActionResult> GetProductsByCategory(string category)
         {
-            var products = await _db.Products.Where(p => p.Category == category).ToListAsync();
-            return Ok(products);
+            return Ok(await _db.Products.Where(p => p.Category != null ? p.Category.ToLower() == category.ToLower(): false).ToListAsync());
         }
         /// <summary>
         /// Gets <c>Product</c> by a given Id.
         /// </summary>
         /// <param name="id">The Id of the wanted <c>Product</c>.</param>
         /// <returns><c>Ok</c> with the wanted <c>Product</c></returns>
-        [HttpGet("[action]{id=int}")]
+        [HttpGet("[action]")]
         public async Task<IActionResult> GetProductById(int id)
         {
             var product = await _db.Products.SingleOrDefaultAsync(p => p.Id == id);
@@ -68,10 +67,10 @@ namespace guitar_backend.Controllers
         public async Task<IActionResult> Search([FromBody] SearchModel model, int limit, int step, string sortBy = "CreatedAt", bool desc = true)
         {
             var productsQuery = _db.Products.Where(p =>
-                    p.Name != null ? p.Name.ToLower().Contains(model.SearchStr.ToLower()) : true &&
-                    model.Color != null ? p.Color == model.Color : true &&
-                    model.Company != null ? p.Company == model.Company : true &&
-                    model.Category != null ? p.Category == model.Category : true
+                    p.Name != null && p.Name!= string.Empty ? p.Name.ToLower().Contains(model.SearchStr.ToLower()) : true &&
+                    model.Color != null && p.Name != string.Empty ? p.Color == model.Color : true &&
+                    model.Company != null && p.Name != string.Empty ? p.Company == model.Company : true &&
+                    model.Category != null && p.Name != string.Empty ? p.Category == model.Category : true
                 );
             int count = await productsQuery.CountAsync();
             var products = await productsQuery.OrderBy(sortBy, desc).Skip(step).Take(limit).ToListAsync();

@@ -90,7 +90,7 @@ namespace guitar_backend.Controllers
             {
                 _db.Orders.Remove(order);
                 await _db.SaveChangesAsync();
-                return BadRequest($"an error has occured");
+                return BadRequest($"An error has occured");
             }
         }
     }
