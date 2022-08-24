@@ -64,7 +64,7 @@ namespace guitar_backend.Controllers
         /// <param name="desc">If true, orders outputs in descending order, otherwise in ascending order.</param>
         /// <returns>All of the <c>Product</c>s that match the profile specified in the body of the request.</returns>
         [HttpPost("[action]")]
-        public async Task<IActionResult> Search([FromBody] SearchModel model, int limit, int step, string sortBy = "CreatedAt", bool desc = true)
+        public async Task<IActionResult> Search([FromBody] SearchModel model, int limit, int step, string sortBy = "Id", bool desc = true)
         {
             var productsQuery = _db.Products.Where(p =>
                     p.Name != null && p.Name!= string.Empty ? p.Name.ToLower().Contains(model.SearchStr.ToLower()) : true &&
